@@ -1,0 +1,39 @@
+package com.vagner.springboot.department.project.error;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+
+// This setup for exception cleans up the returned values when exception is thrown
+
+@ControllerAdvice
+@ResponseStatus
+public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler
+{
+
+	@ExceptionHandler(DepartmentNotFoundException.class) //response entity is given
+	public ResponseEntity<ErrorMessage> departmentNotFoundException(DepartmentNotFoundException exception, WebRequest request)
+	{
+		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+	}
+	
+	@ExceptionHandler(DeleteDepartmentException.class) //response entity is given
+	public ResponseEntity<ErrorMessage> deleteDepartmentException(DeleteDepartmentException exception, WebRequest request)
+	{
+		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+	}
+	
+	@ExceptionHandler(NoDepartmentWithProvidedNameException.class) //response entity is given
+	public ResponseEntity<ErrorMessage> noDepartmentWithProvidedNameException(NoDepartmentWithProvidedNameException exception, WebRequest request)
+	{
+		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+	}
+}
