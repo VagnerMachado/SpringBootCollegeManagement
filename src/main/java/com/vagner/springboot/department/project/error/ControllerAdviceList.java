@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 @ResponseStatus
-public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler
+public class ControllerAdviceList extends ResponseEntityExceptionHandler
 {
 
 	@ExceptionHandler(DepartmentNotFoundException.class) //response entity is given

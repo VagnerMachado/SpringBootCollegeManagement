@@ -1,17 +1,16 @@
 package com.vagner.springboot.department.project.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.error.DeleteDepartmentException;
 import com.vagner.springboot.department.project.error.DepartmentNotFoundException;
 import com.vagner.springboot.department.project.error.NoDepartmentWithProvidedNameException;
-import com.vagner.springboot.department.project.service.DepartmentServiceInterface;
+import com.vagner.springboot.department.project.service.DepartmentServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +19,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController // a rest controller so can make rest api here
 public class DepartmentController 
 {
 	@Autowired // Wires the Department Object Definition
-	private DepartmentServiceInterface departmentService;
+	private DepartmentServiceImpl departmentService;
 	private final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
 	
 	@PostMapping("/departments")
@@ -38,7 +36,7 @@ public class DepartmentController
 	public Department saveDepartment(@Valid @RequestBody Department department)
 	{
 		LOGGER.info("In saveDepartment at DepartmentController");
-		//DepartmentServiceInterface service = new DepartmentServiceImplementation(); give up for autowire
+		department.setDepartmentID(null); // causes the auto increment to be used.
 		return departmentService.saveDepartment(department);
 	}
 	
@@ -56,12 +54,11 @@ public class DepartmentController
 		return departmentService.getDepartmentByID(id);
 	}
 	
-	@DeleteMapping("/departments/{id}")
-	public String deleteDepartmentByID(@PathVariable("id") Long id) throws DeleteDepartmentException
+	@DeleteMapping(value = "/departments/{id}")
+	public ResponseEntity<String> deleteDepartmentByID(@PathVariable("id") Long id) throws DeleteDepartmentException
 	{
 		LOGGER.info("In deleteDepartmentByID at DepartmentController");
 		return departmentService.deleteDepartmentByID(id);
-		//return "Deleted SuccessFully";
 	}
 	
 	@PutMapping("/departments/{id}") // 
@@ -72,17 +69,16 @@ public class DepartmentController
 	}
 	
 	@GetMapping("/departments/name/{name}")
-	public Department getDepartmentByID(@PathVariable("name") String name) throws NoDepartmentWithProvidedNameException
+	public List<Department> getDepartmentByName(@PathVariable("name") String name) throws NoDepartmentWithProvidedNameException
 	{
 		LOGGER.info("In getDepartmentByID at DepartmentController");
 		return departmentService.getDepartmentByName(name);
 	}
 	
-	@GetMapping("/departments/contains/{name}")
+	@GetMapping("/departments/name/like/{name}")
 	public List<String> getDepartmentNameLike(@PathVariable String name)throws NoDepartmentWithProvidedNameException
 	{
-		
-		return departmentService.myQueryForNameLike(name); 
-      //picked a random name for custom query
+		LOGGER.info("In getDepartmentNameLike at DepartmentController");
+		return departmentService.customQueryForNameLike(name);
 	}
 }

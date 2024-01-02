@@ -11,13 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class DepartmentServiceTest {
 
     @Autowired
-    private DepartmentServiceInterface departmentService;
+    private DepartmentService departmentService;
 
     @MockBean
     private DepartmentRepositoryInterface departmentRepository;
@@ -32,8 +34,8 @@ class DepartmentServiceTest {
                 .departmentID(1L)
                 .build();
 
-        Mockito.when(departmentRepository.findByDepartmentNameIgnoreCase("IT"))
-                .thenReturn(department);
+        Mockito.when(departmentRepository.findByDepartmentName("IT"))
+                .thenReturn(List.of(department));
 
     }
 

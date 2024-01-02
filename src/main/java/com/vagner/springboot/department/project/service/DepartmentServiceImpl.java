@@ -3,9 +3,9 @@ package com.vagner.springboot.department.project.service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import com.vagner.springboot.department.project.repository.DepartmentRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.error.DeleteDepartmentException;
@@ -13,9 +13,8 @@ import com.vagner.springboot.department.project.error.DepartmentNotFoundExceptio
 import com.vagner.springboot.department.project.error.NoDepartmentWithProvidedNameException;
 
 @Service // denotes this is a service
-public class DepartmentServiceImplementation implements DepartmentServiceInterface 
+public class DepartmentServiceImpl implements DepartmentService
 {
-
 	@Autowired
 	private DepartmentRepositoryInterface departmentRepository;
 
@@ -40,17 +39,15 @@ public class DepartmentServiceImplementation implements DepartmentServiceInterfa
 	}
 
 	@Override
-	public String deleteDepartmentByID(Long id) throws DeleteDepartmentException
+	public ResponseEntity<String> deleteDepartmentByID(Long id) throws DeleteDepartmentException
 	{
 		Optional<Department> opt = departmentRepository.findById(id);
 		if(opt.isPresent())
 		{
 		departmentRepository.deleteById(id);
-		return "Deleted Successfully";
+		return ResponseEntity.ok("Deletion Successful");
 		}
-		throw new DeleteDepartmentException("Department Not Found, can't delete.");
-
-
+		throw new DeleteDepartmentException("Department Not Found, cannot delete.");
 	}
 
 	@Override
@@ -94,22 +91,22 @@ public class DepartmentServiceImplementation implements DepartmentServiceInterfa
 	}
 
 	@Override
-	public Department getDepartmentByName(String departmentName) throws NoDepartmentWithProvidedNameException
+	public List<Department> getDepartmentByName(String departmentName) throws NoDepartmentWithProvidedNameException
 	{
-		Object dept = departmentRepository.findByDepartmentName(departmentName);
-		if (dept == null)
+		List<Department> dept = departmentRepository.findByDepartmentName(departmentName);
+		if (dept == null || dept.isEmpty())
 			throw new NoDepartmentWithProvidedNameException("There is no Department with provided name");
-		return (Department)dept;
+		return dept;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<String> myQueryForNameLike(String name) throws NoDepartmentWithProvidedNameException
+	public List<String> customQueryForNameLike(String name) throws NoDepartmentWithProvidedNameException
 	{
-		Object obj =  departmentRepository.myQueryForNameLike(name);
+		List<String> obj =  departmentRepository.customQueryForNameLike(name);
 		if(obj == null)
 			throw new NoDepartmentWithProvidedNameException("Failed to retrieve Departments with name similar to " + name);
-		return (List<String>) obj; //will leave as no error if none present
+		return obj; //will leave as no error if none present
 	}
 
 }
