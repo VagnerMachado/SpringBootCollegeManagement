@@ -43,8 +43,8 @@ class DepartmentServiceTest {
     @DisplayName("Get Data based on Valid Department Name")
     public void whenValidDepartmentName_thenDepartmentShouldFound() throws NoDepartmentWithProvidedNameException {
         String departmentName = "IT";
-        Department found = departmentService.getDepartmentByName(departmentName);
+        List <Department> found = departmentService.getDepartmentByName(departmentName);
 
-        assertEquals(departmentName, found.getDepartmentName());
+        assertEquals(departmentName, found.get(0).getDepartmentName());
     }
 }

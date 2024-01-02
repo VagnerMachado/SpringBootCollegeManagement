@@ -3,8 +3,12 @@ package com.vagner.springboot.department.project.service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.vagner.springboot.department.project.error.UpdateDepartmentException;
 import com.vagner.springboot.department.project.repository.DepartmentRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.vagner.springboot.department.project.entity.Department;
@@ -19,12 +23,12 @@ public class DepartmentServiceImpl implements DepartmentService
 	private DepartmentRepositoryInterface departmentRepository;
 
 	@Override
-	public Department saveDepartment(Department department) 
+	public Department saveDepartment(Department department)
 	{
 		return departmentRepository.save(department); //saves the department to database
 	}
 
-	@Override 
+	@Override
 	public List<Department> fetchDepartmentList()
 	{
 		return departmentRepository.findAll();
@@ -44,50 +48,59 @@ public class DepartmentServiceImpl implements DepartmentService
 		Optional<Department> opt = departmentRepository.findById(id);
 		if(opt.isPresent())
 		{
-		departmentRepository.deleteById(id);
-		return ResponseEntity.ok("Deletion Successful");
+			departmentRepository.deleteById(id);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			return ResponseEntity.status(200).headers(headers).body("{ \"Deletion\" : \"Successful for Department with id " + id + "\"}");
 		}
 		throw new DeleteDepartmentException("Department Not Found, cannot delete.");
 	}
 
 	@Override
-	public Department updateDepartmentByID(Department dept, Long id) 
-	{
+	public Department updateDepartmentByID(Department updatedDepartment, Long id) throws UpdateDepartmentException {
 		Optional<Department> opt = departmentRepository.findById(id);
-		Department depDB = null;
+		Department departmentFromDatabase = null;
 		//update existing
 		if(opt.isPresent())
 		{
-			depDB = opt.get();
-			if(Objects.nonNull(dept.getDepartmentName()) && !"".equalsIgnoreCase(dept.getDepartmentName()))
+			departmentFromDatabase = opt.get();
+			if(Objects.nonNull(updatedDepartment.getDepartmentName()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentName()))
 			{
-				depDB.setDepartmentName(dept.getDepartmentName());
+				departmentFromDatabase.setDepartmentName(updatedDepartment.getDepartmentName());
 			}
 
-			if(Objects.nonNull(dept.getDepartmentCode()) && !"".equalsIgnoreCase(dept.getDepartmentCode()))
+			if(Objects.nonNull(updatedDepartment.getDepartmentCode()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentCode()))
 			{
-				depDB.setDepartmentCode(dept.getDepartmentCode());
+				departmentFromDatabase.setDepartmentCode(updatedDepartment.getDepartmentCode());
 			}
 
-			if(Objects.nonNull(dept.getDepartmentAddress()) && !"".equalsIgnoreCase(dept.getDepartmentAddress()))
+			if(Objects.nonNull(updatedDepartment.getDepartmentAddress()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentAddress()))
 			{
-				depDB.setDepartmentAddress(dept.getDepartmentAddress());
+				departmentFromDatabase.setDepartmentAddress(updatedDepartment.getDepartmentAddress());
 			}
-			return departmentRepository.save(depDB);
+			return departmentRepository.save(departmentFromDatabase);
 		}
-		else // test if all valid
+		else // POST into database if departmentID is not found
 		{
-			if(Objects.nonNull(dept.getDepartmentName()) && !"".equalsIgnoreCase(dept.getDepartmentName()) &&
-					Objects.nonNull(dept.getDepartmentCode()) && !"".equalsIgnoreCase(dept.getDepartmentCode()) &&
-					Objects.nonNull(dept.getDepartmentAddress()) && !"".equalsIgnoreCase(dept.getDepartmentAddress()))
+			if(Objects.nonNull(updatedDepartment.getDepartmentName()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentName()) &&
+					Objects.nonNull(updatedDepartment.getDepartmentCode()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentCode()) &&
+					Objects.nonNull(updatedDepartment.getDepartmentAddress()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentAddress()))
 			{
-				depDB = new Department();
-				depDB.setDepartmentName(dept.getDepartmentName());
-				depDB.setDepartmentCode(dept.getDepartmentCode());
-				depDB.setDepartmentAddress(dept.getDepartmentAddress());
+				departmentFromDatabase = new Department();
+				departmentFromDatabase.setDepartmentName(updatedDepartment.getDepartmentName());
+				departmentFromDatabase.setDepartmentCode(updatedDepartment.getDepartmentCode());
+				departmentFromDatabase.setDepartmentAddress(updatedDepartment.getDepartmentAddress());
+			}
+			else // if some fields are missing then do not post into the database.
+			{
+				throw new UpdateDepartmentException("Cannot put object as some fields are missing. Sample:\n {\n" +
+						"    \"departmentName\" : \"name update\",\n" +
+						"    \"departmentAddress\" : \"Address\",\n" +
+						"    \"departmentCode\" : \"123DT\"\n" +
+						"}");
 			}
 		}
-		return departmentRepository.save(depDB);
+		return departmentRepository.save(departmentFromDatabase);
 	}
 
 	@Override
@@ -104,7 +117,7 @@ public class DepartmentServiceImpl implements DepartmentService
 	public List<String> customQueryForNameLike(String name) throws NoDepartmentWithProvidedNameException
 	{
 		List<String> obj =  departmentRepository.customQueryForNameLike(name);
-		if(obj == null)
+		if(obj == null || obj.isEmpty())
 			throw new NoDepartmentWithProvidedNameException("Failed to retrieve Departments with name similar to " + name);
 		return obj; //will leave as no error if none present
 	}
