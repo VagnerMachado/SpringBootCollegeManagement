@@ -1,7 +1,7 @@
 package com.vagner.springboot.department.project.controller;
 
 import com.vagner.springboot.department.project.entity.Department;
-import com.vagner.springboot.department.project.service.DepartmentServiceInterface;
+import com.vagner.springboot.department.project.service.DepartmentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
@@ -12,9 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @WebMvcTest(DepartmentController.class)
 class DepartmentControllerTest {
@@ -23,7 +21,7 @@ class DepartmentControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private DepartmentServiceInterface departmentService;
+    private DepartmentService departmentService;
 
     private Department department;
 
@@ -50,11 +48,10 @@ class DepartmentControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/departments")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("\"departmentName\":  \"math\",\r\n" + 
+				.content("{\"departmentName\":  \"math\",\r\n" +
 						"	  \"departmentAddress\": \"Everywhere\",\r\n" + 
-						"		\"departmentCode\":\"CEW 3\""))
+						"		\"departmentCode\":\"CEW 3\"}"))
 				.andExpect(MockMvcResultMatchers.status().isOk());
-
     }
 
     @Test
