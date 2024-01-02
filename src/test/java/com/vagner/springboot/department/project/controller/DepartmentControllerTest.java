@@ -2,6 +2,7 @@ package com.vagner.springboot.department.project.controller;
 
 import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.service.DepartmentService;
+import com.vagner.springboot.department.project.service.DepartmentServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
@@ -21,7 +22,7 @@ class DepartmentControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private DepartmentService departmentService;
+    private DepartmentServiceImpl departmentService;
 
     private Department department;
 

@@ -6,6 +6,7 @@ import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.error.DeleteDepartmentException;
 import com.vagner.springboot.department.project.error.DepartmentNotFoundException;
 import com.vagner.springboot.department.project.error.NoDepartmentWithProvidedNameException;
+import com.vagner.springboot.department.project.error.UpdateDepartmentException;
 import org.springframework.http.ResponseEntity;
 
 
@@ -20,13 +21,9 @@ public interface DepartmentService
 
 	ResponseEntity<String> deleteDepartmentByID(Long id) throws DeleteDepartmentException;
 
-	Department updateDepartmentByID(Department dept, Long id);
+	Department updateDepartmentByID(Department dept, Long id) throws UpdateDepartmentException;
 
 	List<Department> getDepartmentByName(String departmentName) throws NoDepartmentWithProvidedNameException;
 
 	List<String> customQueryForNameLike(String name) throws NoDepartmentWithProvidedNameException; //custom query
-	
-
-
-
 }
