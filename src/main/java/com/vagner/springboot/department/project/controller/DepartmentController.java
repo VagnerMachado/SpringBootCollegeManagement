@@ -3,12 +3,11 @@ package com.vagner.springboot.department.project.controller;
 import java.util.List;
 import javax.validation.Valid;
 import com.vagner.springboot.department.project.entity.Department;
-import com.vagner.springboot.department.project.error.DeleteDepartmentException;
-import com.vagner.springboot.department.project.error.DepartmentNotFoundException;
-import com.vagner.springboot.department.project.error.NoDepartmentWithProvidedNameException;
-import com.vagner.springboot.department.project.error.UpdateDepartmentException;
+import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
+import com.vagner.springboot.department.project.error.department.DepartmentNotFoundException;
+import com.vagner.springboot.department.project.error.department.NoDepartmentWithProvidedNameException;
+import com.vagner.springboot.department.project.error.department.UpdateDepartmentException;
 import com.vagner.springboot.department.project.service.DepartmentService;
-import com.vagner.springboot.department.project.service.DepartmentServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DepartmentController 
 {
 	@Autowired // Wires the Department Object Definition
-	private DepartmentServiceImpl departmentService;
+	private DepartmentService departmentService;
 	private final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
 
 	@PostMapping("/departments")
@@ -34,7 +33,7 @@ public class DepartmentController
 	public Department saveDepartment(@Valid @RequestBody Department department)
 	{
 		LOGGER.info("In saveDepartment at DepartmentController");
-		department.setDepartmentID(null); // causes the auto increment to be used.
+		department.setDepartmentId(null); // causes the auto increment to be used.
 		return departmentService.saveDepartment(department);
 	}
 	

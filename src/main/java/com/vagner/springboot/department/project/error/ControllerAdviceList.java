@@ -1,5 +1,9 @@
 package com.vagner.springboot.department.project.error;
 
+import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
+import com.vagner.springboot.department.project.error.department.DepartmentNotFoundException;
+import com.vagner.springboot.department.project.error.department.NoDepartmentWithProvidedNameException;
+import com.vagner.springboot.department.project.error.department.UpdateDepartmentException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import javax.validation.ConstraintViolationException;
 
 
 // This setup for exception cleans up the returned values when exception is thrown
@@ -54,6 +60,15 @@ public class ControllerAdviceList extends ResponseEntityExceptionHandler
 		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, getPath(request), "Bean passed is failing validation. " + ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
 	}
+	@ExceptionHandler(ConstraintViolationException.class)
+	protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, HttpHeaders headers, HttpStatus status, WebRequest request)
+	{
+
+		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, "path", ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+	}
+
+
 
 	private String getPath(WebRequest request)
 	{

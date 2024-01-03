@@ -1,9 +1,8 @@
 package com.vagner.springboot.department.project.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -19,14 +18,19 @@ public class Department
 {
 	@Id // indicated departmentID is primary key
 	@GeneratedValue(strategy = GenerationType.AUTO) // auto generation for the primary key
-	private Long departmentID;
+	private Long departmentId;
 	@NotBlank(message = "Please add department name") // from validation dependency in pom
 	private String departmentName;
-	@NotBlank(message = "Please add department address")
-	private String departmentAddress;
 	@Length(max=5, min=5, message="Department code has to be length 5")
 	private String departmentCode;
+	@Length(max=12, min=12, message="Phone w 12 chars in format 123-45-6789")
+	private String phone;
+	@NotBlank @Email
+	String email;
 
+	@OneToOne(cascade = CascadeType.ALL) // Indicates a one-to-one relationship between department and address
+	@MapsId // Indicates that the relationship share the same id
+	Address address;
 
 	/*****************************
 	 * VALIDATIONS

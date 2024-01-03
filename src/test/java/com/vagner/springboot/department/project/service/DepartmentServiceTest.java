@@ -1,7 +1,7 @@
 package com.vagner.springboot.department.project.service;
 
 import com.vagner.springboot.department.project.entity.Department;
-import com.vagner.springboot.department.project.error.NoDepartmentWithProvidedNameException;
+import com.vagner.springboot.department.project.error.department.NoDepartmentWithProvidedNameException;
 import com.vagner.springboot.department.project.repository.DepartmentRepositoryInterface;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
