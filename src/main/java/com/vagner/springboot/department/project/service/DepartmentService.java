@@ -143,9 +143,9 @@ public class DepartmentService
 		return dept;
 	}
 
-	public List<String> customQueryForNameLike(String name) throws NoDepartmentWithProvidedNameException
+	public List<Department> customQueryForNameLike(String name) throws NoDepartmentWithProvidedNameException
 	{
-		List<String> obj =  departmentRepository.customQueryForNameLike(name);
+		List<Department> obj =  departmentRepository.customQueryForNameLike(name);
 		if(obj == null || obj.isEmpty())
 			throw new NoDepartmentWithProvidedNameException("Failed to retrieve Departments with name similar to " + name);
 		return obj; //will leave as no error if none present

@@ -72,7 +72,7 @@ public class DepartmentController
 	}
 	
 	@GetMapping("/departments/name/like/{name}")
-	public List<String> getDepartmentNameLike(@PathVariable String name)throws NoDepartmentWithProvidedNameException
+	public List<Department> getDepartmentNameLike(@PathVariable String name)throws NoDepartmentWithProvidedNameException
 	{
 		LOGGER.info("In getDepartmentNameLike at DepartmentController");
 		return departmentService.customQueryForNameLike(name);
