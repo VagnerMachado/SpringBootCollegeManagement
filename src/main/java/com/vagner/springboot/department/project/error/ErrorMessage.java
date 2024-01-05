@@ -14,4 +14,9 @@ public class ErrorMessage
 	private String path;
 	private String message;
 
+    public ErrorMessage(HttpStatus httpStatus, String violation)
+	{
+		status = httpStatus;
+		message = violation;
+    }
 }

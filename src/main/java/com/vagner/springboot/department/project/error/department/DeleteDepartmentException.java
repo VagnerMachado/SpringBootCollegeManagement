@@ -1,4 +1,4 @@
-package com.vagner.springboot.department.project.error;
+package com.vagner.springboot.department.project.error.department;
 
 @SuppressWarnings("serial")
 public class DeleteDepartmentException extends Exception

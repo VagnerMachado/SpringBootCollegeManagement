@@ -22,6 +22,6 @@ public interface DepartmentRepositoryInterface extends JpaRepository<Department,
 	//more conventions can be found at 
 	// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 	
-	@Query(value = "select DEPARTMENT_NAME from DEPARTMENT where DEPARTMENT.DEPARTMENT_NAME like %?1%", nativeQuery = true)
-	public List<String> customQueryForNameLike(String name); //picked a random name for a custom query
+	@Query(value = "select * from DEPARTMENT where DEPARTMENT.DEPARTMENT_NAME like %?1%", nativeQuery = true)
+	public List<Department> customQueryForNameLike(String name); //picked a random name for a custom query
 }
