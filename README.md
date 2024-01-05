@@ -1,10 +1,51 @@
-# Read Me
+![image](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.AuII18L1hrDgBpr-x8ioCQHaFj%26pid%3DApi&f=1&ipt=a9a01d007527478921ce95216907e053b43a76f7c51f474eb9dd9953681c20d9&ipo=images)
 
-# Getting Started
+# Project Notes
 
 ---
 
+This project explores creating a Spring Boot API to manage departments, and in the process, enrich the application by
+exploring spring various annotations, hibernate, jpa, exception handling, different types of data persistance with h2
+database and other topics.
+
+As this was coded in offline mode during commute, it was set to use `h2 database` for developments and one can customize
+that easily in configurations located at `application.properties`
+
+With the above, some data persistence is still achieved as h2 is set to save the data to file in properties file aforementioned.
+A few notes below for reference for memory vs file based `h2 ddatabase`
+
+- When line below is set in configuration file, data is lost once app is restarted  
+`
+spring.datasource.url=jdbc:h2:mem:dept
+`
+- When the below lines are set in configuration, data is persisted in file as per ddl-auto value.
+`
+spring.datasource.url=jdbc:h2:file:~/dept
+spring.jpa.hibernate.ddl-auto=update
+`
+- In addition to `update` you can set to `create, none, create-drop, validate` and details for each can be found when 
+scrolling through this post [here](https://stackoverflow.com/questions/42135114/how-does-spring-jpa-hibernate-ddl-auto-property-exactly-work-in-spring)
+
+Upon running the application one can call the APIs via the Postman collection to be added to the root of the app once
+it is done. Additionally, one can use the swagger ui and api docs in provided links below.
+
+### Links for the project
+
+- Once the application is running you can access the h2 console here
+  - http://localhost:8080/h2-console/ 
+- Swagger UI that can be used in place of Postman.
+  - http://localhost:8080/swagger-ui/index.html
+- Once running, access API docs in this link.
+  - http://localhost:8080/v3/api-docs 
+- Useful to convert api docs to yaml
+  - https://json2yaml.com/ 
+
+---
+# Further exploration
+---
+
 ### Reference Documentation
+
 For further reference, please consider the following sections:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)

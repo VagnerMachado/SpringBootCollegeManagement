@@ -28,7 +28,6 @@ class DepartmentControllerTest {
     @BeforeEach
     void setUp() {
         department = Department.builder()
-                .departmentAddress("Ahmedabad")
                 .departmentCode("IT-06")
                 .departmentName("IT")
                 .departmentID(1L)

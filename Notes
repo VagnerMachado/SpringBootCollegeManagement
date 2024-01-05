@@ -1,0 +1,7 @@
+Working now:
+- swagger ui
+- documentation
+
+Next Step:
+- Departments must be uniques
+- Explore a College Entity that can contain many departments and a primary address, in additional to its properties.
