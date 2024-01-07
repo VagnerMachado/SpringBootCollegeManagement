@@ -40,6 +40,15 @@ it is done. Additionally, one can use the swagger ui and api docs in provided li
 - Useful to convert api docs to yaml
   - https://json2yaml.com/ 
 
+### Spring JPA / Hibernate
+
+Adding the @ManyToOne annotation to College in order to track a College having many Departments took a bit of reading
+and testing the value for ` mappedBy = "departmentId"` in the `College` `@Entity`. The annotation tells JPA that the 
+one to many relation is mapped by the `departmentId` in the child entity. Relevant links:
+* [Discussion in Stack overflow](https://stackoverflow.com/questions/48310688/error-annotationexception-mappedby-reference-an-unknown-target-entity-property)
+* [Baeldung Article](https://www.baeldung.com/hibernate-one-to-many)
+* [BezKoder Article and samples](https://www.bezkoder.com/jpa-manytoone/) 
+
 ---
 # Further exploration
 ---

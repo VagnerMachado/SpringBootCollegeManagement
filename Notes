@@ -1,7 +1,8 @@
 Working now:
-- swagger ui
-- documentation
-
-Next Step:
-- Departments must be uniques
-- Explore a College Entity that can contain many departments and a primary address, in additional to its properties.
+- College Controller cascading down to service, repository
+- Explore the @ManyToOne annotation in College as it can have many departments.
+-Add a main address to the college
+TBD:
+- Actuator
+- Departments must be uniques when a college is posted.
+- [done] Explore a College Entity that can contain many departments and a primary address, in additional to its properties.
