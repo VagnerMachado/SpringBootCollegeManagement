@@ -87,9 +87,9 @@ public class DepartmentService
 				Address updatedAddress = updatedDepartment.getAddress();
 				Address databaseAddress = departmentFromDatabase.getAddress();
 
-				if(Objects.nonNull(updatedAddress.getDepartmentAddress()) && !"".equalsIgnoreCase(updatedAddress.getDepartmentAddress()))
+				if(Objects.nonNull(updatedAddress.getMainAddress()) && !"".equalsIgnoreCase(updatedAddress.getMainAddress()))
 				{
-					databaseAddress.setDepartmentAddress(updatedAddress.getDepartmentAddress());
+					databaseAddress.setMainAddress(updatedAddress.getMainAddress());
 				}
 				if(Objects.nonNull(updatedAddress.getAdditionalAddress()) && !"".equalsIgnoreCase(updatedAddress.getAdditionalAddress()))
 				{

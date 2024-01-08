@@ -25,6 +25,7 @@ spring.jpa.hibernate.ddl-auto=update
 `
 - In addition to `update` you can set to `create, none, create-drop, validate` and details for each can be found when 
 scrolling through this post [here](https://stackoverflow.com/questions/42135114/how-does-spring-jpa-hibernate-ddl-auto-property-exactly-work-in-spring)
+- While developing I am keeping at `create` so earlier costraints are not applied to a changed schema. 
 
 Upon running the application one can call the APIs via the Postman collection to be added to the root of the app once
 it is done. Additionally, one can use the swagger ui and api docs in provided links below.
@@ -44,11 +45,14 @@ it is done. Additionally, one can use the swagger ui and api docs in provided li
 
 Adding the @ManyToOne annotation to College in order to track a College having many Departments took a bit of reading
 and testing the value for ` mappedBy = "departmentId"` in the `College` `@Entity`. The annotation tells JPA that the 
-one to many relation is mapped by the `departmentId` in the child entity. Relevant links:
+one to many relation is mapped by the `departmentId` in the child entity. 
+Relevant comments for the annotations can be found in the `@Entity` classes.   
+Relevant links:
+
 * [Discussion in Stack overflow](https://stackoverflow.com/questions/48310688/error-annotationexception-mappedby-reference-an-unknown-target-entity-property)
 * [Baeldung Article](https://www.baeldung.com/hibernate-one-to-many)
 * [BezKoder Article and samples](https://www.bezkoder.com/jpa-manytoone/) 
-
+* [@ElementCollection annotation forum](https://stackoverflow.com/questions/3774198/org-hibernate-mappingexception-could-not-determine-type-for-java-util-list-at)
 ---
 # Further exploration
 ---

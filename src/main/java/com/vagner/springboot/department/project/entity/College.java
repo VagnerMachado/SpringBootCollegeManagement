@@ -31,10 +31,10 @@ public class College
     @OneToMany (mappedBy = "departmentId", //the id that will have many values
                 orphanRemoval = true,
                 cascade = CascadeType.ALL) // cascade the child tables
-    List<Department> department;
+    List<Department> departments;
     @OneToOne(cascade = CascadeType.ALL) // one university has one address (primary) - each dept will have its address.
     @MapsId
-    CollegeAddress address;
-//    @NotNull
-//    List<String> majors;
+    Address address; //say a college will have a main address.
+    @NotNull  @ElementCollection(targetClass=String.class) //JPA did not automatically determine the type so indicated via @Element annotation
+    List<String> majors;
 }
