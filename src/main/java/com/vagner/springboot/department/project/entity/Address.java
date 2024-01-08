@@ -21,7 +21,7 @@ public class Address
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long addressId;
     @NotBlank(message = "Please add department address")
-    private String departmentAddress;
+    private String mainAddress;
     private String additionalAddress;
     @NotBlank(message = "Please add city to address")
     String city;
