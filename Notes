@@ -1,8 +1,6 @@
 Working now:
-- College Controller cascading down to service, repository
-- Explore the @ManyToOne annotation in College as it can have many departments.
--Add a main address to the college
-TBD:
-- Actuator
-- Departments must be uniques when a college is posted.
-- [done] Explore a College Entity that can contain many departments and a primary address, in additional to its properties.
+
+TBD ORDER:
+1. Departments must be uniques when a college is posted / updated (how to determine? dept code?)
+2. Work on Department Controller - POST / PUT will have to have a collegeId associated with it, address attached to it.
+3. Actuator
