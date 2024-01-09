@@ -1,12 +1,18 @@
-![image](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.AuII18L1hrDgBpr-x8ioCQHaFj%26pid%3DApi&f=1&ipt=a9a01d007527478921ce95216907e053b43a76f7c51f474eb9dd9953681c20d9&ipo=images)
+[//]: # (<p align="center"> ![image]&#40;https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.AuII18L1hrDgBpr-x8ioCQHaFj%26pid%3DApi&f=1&ipt=a9a01d007527478921ce95216907e053b43a76f7c51f474eb9dd9953681c20d9&ipo=images&#41; </p>)
+
+# READ ME  
+
+--- 
+
+<div style="text-align:center"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.AuII18L1hrDgBpr-x8ioCQHaFj%26pid%3DApi&f=1&ipt=a9a01d007527478921ce95216907e053b43a76f7c51f474eb9dd9953681c20d9&ipo=images"/></div>
 
 # Project Notes
 
 ---
 
-This project explores creating a Spring Boot API to manage departments, and in the process, enrich the application by
-exploring spring various annotations, hibernate, jpa, exception handling, different types of data persistance with h2
-database and other topics.
+This project explores creating a Spring Boot API to manage colleges and its departments, and in the process, enrich the application by
+exploring spring's various annotations, hibernate, jpa, exception handling, different types of data persistence with h2
+database and other topics, one to many and one to one via annotations, etc.
 
 As this was coded in offline mode during commute, it was set to use `h2 database` for developments and one can customize
 that easily in configurations located at `application.properties`
@@ -25,7 +31,7 @@ spring.jpa.hibernate.ddl-auto=update
 `
 - In addition to `update` you can set to `create, none, create-drop, validate` and details for each can be found when 
 scrolling through this post [here](https://stackoverflow.com/questions/42135114/how-does-spring-jpa-hibernate-ddl-auto-property-exactly-work-in-spring)
-- While developing I am keeping at `create` so earlier costraints are not applied to a changed schema. 
+- While developing I am keeping at `create` so earlier constraints are not applied to a changed schema. 
 
 Upon running the application one can call the APIs via the Postman collection to be added to the root of the app once
 it is done. Additionally, one can use the swagger ui and api docs in provided links below.

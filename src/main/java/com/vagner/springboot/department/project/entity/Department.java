@@ -7,13 +7,13 @@ import javax.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-@Entity // So the Department can interact with DB repository
-@Data // Lombok gives getter and setters, hascode and tostring, constructor
+@Entity // So the Department can interact with JPA repository
+@Data   // Lombok gives getter and setters, hashcode and toString, constructor
 @Getter // Lombok if only getter
 @Setter // Lombok if only setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder // this indicates lombok is used to reduced boiler plate code for constructor..
+@Builder // this indicates lombok is used to reduced boilerplate code for constructor..
 public class Department
 {
 	@Id // indicated departmentID is primary key
@@ -27,7 +27,7 @@ public class Department
 	private String phone;
 	@NotBlank @Email
 	String email;
-
+	// -- ONE TO ONE ANNOTATION --
 	@OneToOne(cascade = CascadeType.ALL) // Indicates a one-to-one relationship between department and address
 	@MapsId // Indicates that the relationship share the same id
 	Address address;

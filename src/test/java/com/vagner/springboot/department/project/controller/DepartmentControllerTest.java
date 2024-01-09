@@ -30,14 +30,13 @@ class DepartmentControllerTest {
         department = Department.builder()
                 .departmentCode("IT-06")
                 .departmentName("IT")
-                .departmentID(1L)
+                .departmentId(12345L)
                 .build();
     }
 
     @Test
     void saveDepartment() throws Exception {
         Department inputDepartment = Department.builder()
-                .departmentAddress("Ahmedabad")
                 .departmentCode("IT-06")
                 .departmentName("IT")
                 .build();

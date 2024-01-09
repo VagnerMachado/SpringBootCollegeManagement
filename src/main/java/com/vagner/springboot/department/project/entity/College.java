@@ -1,6 +1,7 @@
 package com.vagner.springboot.department.project.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class College
 {
     @Id
@@ -32,9 +34,9 @@ public class College
                 orphanRemoval = true,
                 cascade = CascadeType.ALL) // cascade the child tables
     List<Department> departments;
-    @OneToOne(cascade = CascadeType.ALL) // one university has one address (primary) - each dept will have its address.
+    @OneToOne(cascade = CascadeType.ALL)   // one university has one address (primary) - each dept will have its address.
     @MapsId
-    Address address; //say a college will have a main address.
+    Address address;
     @NotNull  @ElementCollection(targetClass=String.class) //JPA did not automatically determine the type so indicated via @Element annotation
-    List<String> majors;
+    List<String> majors; // let's make them unique
 }
