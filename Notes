@@ -1,9 +1,5 @@
 Working now:
 
-TBD ORDER:
-1. (done) Departments must be uniques when a college is posted / updated (how to determine? dept code?)
-1.1       College POST/PUT must have a unique major list.
-2. Work on Department Controller - POST / PUT will have to have a collegeId associated with it, address attached to it.
-3. Actuator
-
-(TEST PUSH)
+Git Hub Issues to add:
+- When a college is updated how to deal with validate department?
+    - update only the root elements of a college. Treat department and address separately?

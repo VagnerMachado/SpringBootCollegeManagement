@@ -2,6 +2,7 @@ package com.vagner.springboot.department.project.controller;
 
 import com.vagner.springboot.department.project.entity.College;
 import com.vagner.springboot.department.project.error.college.DuplicateDepartmentException;
+import com.vagner.springboot.department.project.error.college.DuplicateMajorException;
 import com.vagner.springboot.department.project.service.CollegeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class CollegeController
 
     @PostMapping("/college")
     //@Valid checks Department class for valid tags in object declaration
-    public College saveCollege(@Valid @RequestBody College college) throws DuplicateDepartmentException {
+    public College saveCollege(@Valid @RequestBody College college) throws DuplicateDepartmentException, DuplicateMajorException {
         LOGGER.info("In saveCollege at CollegeController");
         college.setCollegeId(null); // causes the auto increment to be used.
         return collegeService.saveCollege(college);
