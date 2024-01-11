@@ -1,7 +1,6 @@
 package com.vagner.springboot.department.project.entity;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.*;
@@ -24,13 +23,14 @@ public class Department
 	@Length(max=5, min=5, message="Department code has to be length 5")
 	private String departmentCode;
 	@Length(max=12, min=12, message="Phone w 12 chars in format 123-45-6789")
-	private String phone;
+	private String departmentPhone;
 	@NotBlank @Email
-	String email;
+	String departmentEmail;
 	// -- ONE TO ONE ANNOTATION --
-	@OneToOne(cascade = CascadeType.ALL) // Indicates a one-to-one relationship between department and address
-	@MapsId // Indicates that the relationship share the same id
-	Address address;
+	@OneToOne(cascade = CascadeType.ALL) // Indicates a one-to-one relationship between department and location
+	//@MapsId // Indicates that the relationship share the same id
+	@JoinColumn(name="fk_department_details")
+	DepartmentDetails departmentDetails;
 
 	/*****************************
 	 * VALIDATIONS

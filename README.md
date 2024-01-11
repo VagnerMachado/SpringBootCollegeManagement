@@ -59,8 +59,15 @@ Relevant links:
 * [Baeldung Article](https://www.baeldung.com/hibernate-one-to-many)
 * [BezKoder Article and samples](https://www.bezkoder.com/jpa-manytoone/) 
 * [@ElementCollection annotation forum](https://stackoverflow.com/questions/3774198/org-hibernate-mappingexception-could-not-determine-type-for-java-util-list-at)
+
+Faced some issues when implementing the relations @OneToOne and @OneToMany and adding proper annotations.
+These videos were helpful in clarifying the usage [One to One and One to Many](https://www.youtube.com/watch?v=2fvUrpYG95w&t=589)
+and [Many to Many](https://www.youtube.com/watch?v=v40e5SOMftQ).
+
 ---
+
 # Further exploration
+
 ---
 
 ### Reference Documentation
