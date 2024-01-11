@@ -1,5 +1,6 @@
 package com.vagner.springboot.department.project.error;
 
+import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;
 import com.vagner.springboot.department.project.error.college.DuplicateDepartmentException;
 import com.vagner.springboot.department.project.error.college.DuplicateMajorException;
 import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
@@ -84,6 +85,13 @@ public class ControllerAdviceList extends ResponseEntityExceptionHandler
 	protected ResponseEntity<Object> handleDuplicateDepartmentException(DuplicateMajorException ex, WebRequest request)
 	{
 		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, getPath(request), "Duplicate Majors in Array: " + ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+	}
+
+	@ExceptionHandler(CollegeNotFoundException.class)
+	protected ResponseEntity<Object> handleCollegeNotFound(CollegeNotFoundException ex, WebRequest request)
+	{
+		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, getPath(request), "College not found: " + ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
 	}
 

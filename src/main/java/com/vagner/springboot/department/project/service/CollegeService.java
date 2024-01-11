@@ -28,7 +28,9 @@ public class CollegeService
 
     public List<College> fetchCollegeList()
     {
-        return collegeRepository.findAll();
+        List<College> list = collegeRepository.findAll();
+        System.out.println(list);
+        return list;
     }
 
     // AUXILIARY METHODS

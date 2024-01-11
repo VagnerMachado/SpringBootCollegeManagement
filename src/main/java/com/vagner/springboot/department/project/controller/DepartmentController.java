@@ -2,6 +2,8 @@ package com.vagner.springboot.department.project.controller;
 
 import java.util.List;
 import javax.validation.Valid;
+
+import com.vagner.springboot.department.project.entity.College;
 import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
 import com.vagner.springboot.department.project.error.department.DepartmentNotFoundException;
@@ -28,13 +30,12 @@ public class DepartmentController
 	private DepartmentService departmentService;
 	private final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
 
-	@PostMapping("/departments")
+	@PostMapping("/departments/{collegeId}")
 	//@Valid checks Department class for valid tags in object declaration
-	public Department saveDepartment(@Valid @RequestBody Department department)
-	{
-		LOGGER.info("In saveDepartment at DepartmentController");
+	public College saveDepartment(@Valid @RequestBody Department department, @PathVariable String collegeId) throws Exception {
+		LOGGER.info("In saveDepartment at DepartmentController - college id is " + collegeId);
 		department.setDepartmentId(null); // causes the auto increment to be used.
-		return departmentService.saveDepartment(department);
+		return departmentService.saveDepartment(department, collegeId); // will associate a dept with a collge id
 	}
 	
 	@GetMapping("/departments")
@@ -58,11 +59,11 @@ public class DepartmentController
 		return departmentService.deleteDepartmentByID(id);
 	}
 	
-	@PutMapping("/departments/{id}") // 
-	public Department updateDepartmentByID(@RequestBody @Valid Department dept, @PathVariable("id") Long id) throws UpdateDepartmentException, MethodArgumentNotValidException {
-		LOGGER.info("In updateDepartmentByID at DepartmentController");
-		return departmentService.updateDepartmentByID(dept, id);
-	}
+//	@PutMapping("/departments/{id}") //
+//	public Department updateDepartmentByID(@RequestBody @Valid Department dept, @PathVariable("id") Long id) throws UpdateDepartmentException, MethodArgumentNotValidException {
+//		LOGGER.info("In updateDepartmentByID at DepartmentController");
+//		return departmentService.updateDepartmentByID(dept, id);
+//	}
 	
 	@GetMapping("/departments/name/{name}")
 	public List<Department> getDepartmentByName(@PathVariable String name) throws NoDepartmentWithProvidedNameException

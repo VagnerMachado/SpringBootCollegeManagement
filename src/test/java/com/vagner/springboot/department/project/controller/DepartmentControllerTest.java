@@ -1,5 +1,6 @@
 package com.vagner.springboot.department.project.controller;
 
+import com.vagner.springboot.department.project.entity.College;
 import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.service.DepartmentService;
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,8 @@ class DepartmentControllerTest {
                 .departmentName("IT")
                 .build();
 
-        Mockito.when(departmentService.saveDepartment(inputDepartment))
-                .thenReturn(department);
+        Mockito.when(departmentService.saveDepartment(inputDepartment, String.valueOf(1)))
+                .thenReturn(new College());
 
         mockMvc.perform(MockMvcRequestBuilders.post("/departments")
 				.contentType(MediaType.APPLICATION_JSON)

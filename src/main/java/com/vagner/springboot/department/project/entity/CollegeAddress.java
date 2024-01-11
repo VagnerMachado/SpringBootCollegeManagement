@@ -3,10 +3,7 @@ package com.vagner.springboot.department.project.entity;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 @Entity
 @Data
@@ -15,13 +12,13 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Address
+public class CollegeAddress
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long addressId;
-    @NotBlank(message = "Please add department address")
-    private String mainAddress;
+    Long collegeAddressId;
+    @NotBlank(message = "Please add main address")
+    private String collegeAddress;
     private String additionalAddress;
     @NotBlank(message = "Please add city to address")
     String city;
@@ -29,4 +26,7 @@ public class Address
     String state;
     @Length(max=5, min=5, message="Zip code has to be length 5")
     private String zipCode;
+
+    @OneToOne(mappedBy = "collegeAddress") //indicated the field in owning entity : aka College owns College Address
+    private College college;
 }
