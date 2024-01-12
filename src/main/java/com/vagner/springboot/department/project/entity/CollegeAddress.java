@@ -26,7 +26,4 @@ public class CollegeAddress
     String state;
     @Length(max=5, min=5, message="Zip code has to be length 5")
     private String zipCode;
-
-    @OneToOne(mappedBy = "collegeAddress") //indicated the field in owning entity : aka College owns College Address
-    private College college;
 }

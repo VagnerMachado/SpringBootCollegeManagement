@@ -37,15 +37,11 @@ public class DepartmentService
 		if(!college.isPresent())
 			throw new CollegeNotFoundException("College not present");
 		College collegeFromDatabase = college.get();
-		collegeFromDatabase.setCollegeName("Update name of college via the department controller");
-			/*
-		validation blocck
-		- retrieve the college with id passed
-			- if not existing then throw an exception
-		- when retrieved then validate the new dept code is not existing in current list of depts.
-		- if unique then post
-		 */
-		return collegeRepository.save(collegeFromDatabase); //saves the department to database
+		List<Department> departmentsFromDatabase = collegeFromDatabase.getDepartments();
+		//TODO: add validation that dept code is not dup
+		departmentsFromDatabase.add(department);
+		collegeFromDatabase.setDepartments(departmentsFromDatabase);
+		return collegeRepository.save(collegeFromDatabase);
 	}
 
 	public List<Department> fetchDepartmentList()

@@ -62,8 +62,93 @@ Relevant links:
 
 Faced some issues when implementing the relations @OneToOne and @OneToMany and adding proper annotations.
 These videos were helpful in clarifying the usage [One to One and One to Many](https://www.youtube.com/watch?v=2fvUrpYG95w&t=589)
-and [Many to Many](https://www.youtube.com/watch?v=v40e5SOMftQ).
+and [Many to Many](https://www.youtube.com/watch?v=v40e5SOMftQ) and example below.
 
+One-to-One: A one-to-one relationship is a relationship between two entities where one entity has exactly one instance 
+of another entity. For example, a Person entity can have only one Address entity. Here’s an example of a one-to-one 
+relationship in JPA:
+
+``` java
+  @Entity
+  public class Person {
+  @Id
+  private Long id;
+  private String name;
+  @OneToOne
+  private Address address;
+  // additional properties
+  // standard constructors, getters, and setters
+  }
+  
+  @Entity
+  public class Address {
+  @Id
+  private Long id;
+  private String street;
+  private String city;
+  private String state;
+  private String zipCode;
+  // additional properties
+  // standard constructors, getters, and setters
+  }
+```
+
+One-to-Many: A one-to-many relationship is a relationship between two entities where one entity can have many 
+instances of another entity. For example, a Department entity can have
+many Employee entities. Here’s an example of a one-to-many relationship
+in JPA:
+
+``` java
+@Entity
+public class Department {
+@Id
+private Long id;
+private String name;
+@OneToMany(mappedBy = "department")
+private Set<Employee> employees;
+// additional properties
+// standard constructors, getters, and setters
+}
+
+@Entity
+public class Employee {
+@Id
+private Long id;
+private String name;
+@ManyToOne
+private Department department;
+// additional properties
+// standard constructors, getters, and setters
+}
+```
+
+Many-to-Many: A many-to-many relationship is a relationship between two entities where one entity can have many
+instances of another entity, and vice versa. For example, a Student entity can take many Course entities, and a Course
+entity can be taken by many Student entities. Here’s an example of a many-to-many relationship in JPA:
+
+```
+@Entity
+public class Student {
+@Id
+private Long id;
+private String name;
+@ManyToMany
+private Set<Course> courses;
+// additional properties
+// standard constructors, getters, and setters
+}
+
+@Entity
+public class Course {
+@Id
+private Long id;
+private String name;
+@ManyToMany(mappedBy = "courses")
+private Set<Student> students;
+// additional properties
+// standard constructors, getters, and setters
+}
+```
 ---
 
 # Further exploration
