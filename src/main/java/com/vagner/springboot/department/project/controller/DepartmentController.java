@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import com.vagner.springboot.department.project.entity.College;
 import com.vagner.springboot.department.project.entity.Department;
+import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;
 import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
 import com.vagner.springboot.department.project.error.department.DepartmentNotFoundException;
 import com.vagner.springboot.department.project.error.department.NoDepartmentWithProvidedNameException;
@@ -59,11 +60,11 @@ public class DepartmentController
 		return departmentService.deleteDepartmentByID(id);
 	}
 	
-//	@PutMapping("/departments/{id}") //
-//	public Department updateDepartmentByID(@RequestBody @Valid Department dept, @PathVariable("id") Long id) throws UpdateDepartmentException, MethodArgumentNotValidException {
-//		LOGGER.info("In updateDepartmentByID at DepartmentController");
-//		return departmentService.updateDepartmentByID(dept, id);
-//	}
+	@PutMapping("/departments/college/{collegeId}/department/{departmentId}") //
+	public College updateDepartmentByID(@RequestBody @Valid Department dept, @PathVariable("collegeId") Long collegeId, @PathVariable("departmentId") Long departmentId) throws UpdateDepartmentException, MethodArgumentNotValidException, CollegeNotFoundException {
+		LOGGER.info("In updateDepartmentByID at DepartmentController");
+		return departmentService.updateDepartmentByID(dept, collegeId, departmentId);
+	}
 	
 	@GetMapping("/departments/name/{name}")
 	public List<Department> getDepartmentByName(@PathVariable String name) throws NoDepartmentWithProvidedNameException

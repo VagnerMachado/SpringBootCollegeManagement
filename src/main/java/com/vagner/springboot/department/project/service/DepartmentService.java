@@ -1,25 +1,25 @@
 package com.vagner.springboot.department.project.service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import com.vagner.springboot.department.project.entity.CollegeAddress;
 import com.vagner.springboot.department.project.entity.College;
+import com.vagner.springboot.department.project.entity.Department;
+import com.vagner.springboot.department.project.entity.DepartmentDetails;
 import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;
+import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
+import com.vagner.springboot.department.project.error.department.DepartmentNotFoundException;
+import com.vagner.springboot.department.project.error.department.NoDepartmentWithProvidedNameException;
 import com.vagner.springboot.department.project.error.department.UpdateDepartmentException;
 import com.vagner.springboot.department.project.repository.CollegeRepositoryInterface;
 import com.vagner.springboot.department.project.repository.DepartmentRepositoryInterface;
+import com.vagner.springboot.department.project.utils.CollegeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.vagner.springboot.department.project.entity.Department;
-import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
-import com.vagner.springboot.department.project.error.department.DepartmentNotFoundException;
-import com.vagner.springboot.department.project.error.department.NoDepartmentWithProvidedNameException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service // denotes this is a service
@@ -38,9 +38,9 @@ public class DepartmentService
 			throw new CollegeNotFoundException("College not present");
 		College collegeFromDatabase = college.get();
 		List<Department> departmentsFromDatabase = collegeFromDatabase.getDepartments();
-		//TODO: add validation that dept code is not dup
 		departmentsFromDatabase.add(department);
 		collegeFromDatabase.setDepartments(departmentsFromDatabase);
+		CollegeUtils.validateDepartmentCodes(collegeFromDatabase); //validate that the list of dept has no dup code
 		return collegeRepository.save(collegeFromDatabase);
 	}
 
@@ -69,87 +69,68 @@ public class DepartmentService
 		throw new DeleteDepartmentException("Department Not Found, cannot delete.");
 	}
 
-//	public Department updateDepartmentByID(Department updatedDepartment, Long id) throws UpdateDepartmentException {
-//		Optional<Department> opt = departmentRepository.findById(id);
-//		Department departmentFromDatabase = null;
-//
-//		//update the object case the id exists in the database
-//		if(opt.isPresent())
-//		{
-//			departmentFromDatabase = opt.get();
-//			if(Objects.nonNull(updatedDepartment.getDepartmentName()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentName()))
-//			{
-//				departmentFromDatabase.setDepartmentName(updatedDepartment.getDepartmentName());
-//			}
-//
-//			if(Objects.nonNull(updatedDepartment.getDepartmentCode()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentCode()))
-//			{
-//				departmentFromDatabase.setDepartmentCode(updatedDepartment.getDepartmentCode());
-//			}
-//
-//			if(Objects.nonNull(updatedDepartment.getDepartmentPhone()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentPhone()))
-//			{
-//				departmentFromDatabase.setDepartmentPhone(updatedDepartment.getDepartmentPhone());
-//			}
-//
-//			if(Objects.nonNull(updatedDepartment.getEmail()) && !"".equalsIgnoreCase(updatedDepartment.getEmail()))
-//			{
-//				departmentFromDatabase.setDepartmentEmail(updatedDepartment.getEmail());
-//			}
-//
-//			//update the address field by field as needed
-//			if(Objects.nonNull(updatedDepartment.getCollegeAddress()))
-//			{
-//				CollegeAddress updatedCollegeAddress = updatedDepartment.getCollegeAddress();
-//				CollegeAddress databaseCollegeAddress = departmentFromDatabase.getCollegeAddress();
-//
-//				if(Objects.nonNull(updatedCollegeAddress.getMainAddress()) && !"".equalsIgnoreCase(updatedCollegeAddress.getMainAddress()))
-//				{
-//					databaseCollegeAddress.setMainAddress(updatedCollegeAddress.getMainAddress());
-//				}
-//				if(Objects.nonNull(updatedCollegeAddress.getAdditionalAddress()) && !"".equalsIgnoreCase(updatedCollegeAddress.getAdditionalAddress()))
-//				{
-//					databaseCollegeAddress.setAdditionalAddress(updatedCollegeAddress.getAdditionalAddress());
-//				}
-//				if(Objects.nonNull(updatedCollegeAddress.getCity()) && !"".equalsIgnoreCase(updatedCollegeAddress.getCity()))
-//				{
-//					databaseCollegeAddress.setCity(updatedCollegeAddress.getCity());
-//				}
-//				if(Objects.nonNull(updatedCollegeAddress.getState()) && !"".equalsIgnoreCase(updatedCollegeAddress.getState()))
-//				{
-//					databaseCollegeAddress.setState(updatedCollegeAddress.getState());
-//				}
-//				if(Objects.nonNull(updatedCollegeAddress.getZipCode()) && !"".equalsIgnoreCase(updatedCollegeAddress.getZipCode()))
-//				{
-//					databaseCollegeAddress.setZipCode(updatedCollegeAddress.getZipCode());
-//				}
-//				departmentFromDatabase.setCollegeAddress(databaseCollegeAddress);
-//			}
-//
-//			return departmentRepository.save(departmentFromDatabase);
-//		}
-//		else // POST into database if departmentID is not found
-//		{
-//			if(Objects.nonNull(updatedDepartment.getDepartmentName()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentName()) &&
-//					Objects.nonNull(updatedDepartment.getDepartmentCode()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentCode()) &&
-//					Objects.nonNull(updatedDepartment.getDepartmentPhone()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentPhone()) &&
-//					Objects.nonNull(updatedDepartment.getDepartmentEmail()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentEmail()) &&
-//					)
-//			{
-//				departmentFromDatabase = new Department();
-//				departmentFromDatabase.setDepartmentName(updatedDepartment.getDepartmentName());
-//				departmentFromDatabase.setDepartmentCode(updatedDepartment.getDepartmentCode());
-//				departmentFromDatabase.setDepartmentPhone(updatedDepartment.getDepartmentPhone());
-//				departmentFromDatabase.setDepartmentEmail(updatedDepartment.getDepartmentEmail());
-//				departmentFromDatabase.setDepartmentDetails(updatedDepartment.getDepartmentDetails());
-//			}
-//			else // if some fields are missing then do not post into the database.
-//			{
-//				throw new UpdateDepartmentException("Cannot put object as some required fields are missing");
-//			}
-//		}
-//		return departmentRepository.save(departmentFromDatabase);
-//	}
+	public College updateDepartmentByID(Department updatedDepartment, long collegeId, long departmentId) throws UpdateDepartmentException, CollegeNotFoundException {
+		// TODO: GET THE COLLEGE TO NARROW DOWN DEPT LIST.
+		Optional<College> optCollege = collegeRepository.findById(collegeId);
+		if(!optCollege.isPresent())
+		{
+			throw new CollegeNotFoundException("Cannot PUT department, collegeI does not exist");
+		}
+		College collegeFromDatabase = optCollege.get();
+		Department departmentFromDatabase = null;
+		for(Department d : collegeFromDatabase.getDepartments())
+		{
+			if(d.getDepartmentId() == departmentId)
+			{
+				departmentFromDatabase = d;
+				break;
+			}
+		}
+
+		if(departmentFromDatabase == null)
+		{
+				throw new UpdateDepartmentException("Cannot PUT department, departmentId does not exist");
+		}
+
+		// update block
+		//Department departmentFromDatabase = departmentFromDatabase = optDept.get();
+			if(Objects.nonNull(updatedDepartment.getDepartmentName()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentName()))
+			{
+				departmentFromDatabase.setDepartmentName(updatedDepartment.getDepartmentName());
+			}
+		if(Objects.nonNull(updatedDepartment.getDepartmentCode()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentCode()))
+			{
+				departmentFromDatabase.setDepartmentCode(updatedDepartment.getDepartmentCode());
+			}
+		if(Objects.nonNull(updatedDepartment.getDepartmentPhone()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentPhone()))
+			{
+				departmentFromDatabase.setDepartmentPhone(updatedDepartment.getDepartmentPhone());
+			}
+		if(Objects.nonNull(updatedDepartment.getDepartmentEmail()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentEmail()))
+			{
+				departmentFromDatabase.setDepartmentEmail(updatedDepartment.getDepartmentEmail());
+			}
+		if(Objects.nonNull(updatedDepartment.getDepartmentDetails()))
+		{
+			DepartmentDetails departmentDetailsFromDatabase = departmentFromDatabase.getDepartmentDetails();
+			DepartmentDetails departmentDetailsUpdated = updatedDepartment.getDepartmentDetails();
+
+			if(Objects.nonNull(departmentDetailsUpdated.getDepartmentBuilding()) && !"".equalsIgnoreCase(departmentDetailsUpdated.getDepartmentBuilding()))
+			{
+				departmentDetailsFromDatabase.setDepartmentBuilding(departmentDetailsUpdated.getDepartmentBuilding());
+			}
+			if(Objects.nonNull(departmentDetailsUpdated.getDepartmentFloor()) && !"".equalsIgnoreCase(departmentDetailsUpdated.getDepartmentFloor()))
+			{
+				departmentDetailsFromDatabase.setDepartmentFloor(departmentDetailsUpdated.getDepartmentFloor());
+			}
+			if(Objects.nonNull(departmentDetailsUpdated.getDepartmentBusinessHours()) && !"".equalsIgnoreCase(departmentDetailsUpdated.getDepartmentBusinessHours()))
+			{
+				departmentDetailsFromDatabase.setDepartmentBusinessHours(departmentDetailsUpdated.getDepartmentBusinessHours());
+			}
+			departmentFromDatabase.setDepartmentDetails(departmentDetailsFromDatabase);
+		}
+			return collegeRepository.save(collegeFromDatabase);
+	}
 
 	public List<Department> getDepartmentByName(String departmentName) throws NoDepartmentWithProvidedNameException
 	{
