@@ -1,12 +1,14 @@
 package com.vagner.springboot.department.project.controller;
 
 import com.vagner.springboot.department.project.entity.College;
+import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;
 import com.vagner.springboot.department.project.error.college.DuplicateDepartmentException;
 import com.vagner.springboot.department.project.error.college.DuplicateMajorException;
 import com.vagner.springboot.department.project.service.CollegeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -32,38 +34,11 @@ public class CollegeController
         LOGGER.info("In fetchCollegeList at CollegeController");
         return collegeService.fetchCollegeList();
     }
-//
-//    @GetMapping("/departments/{id}")
-//    public Department getDepartmentByID(@PathVariable("id") Long id) throws DepartmentNotFoundException
-//    {
-//        LOGGER.info("In getDepartmentByID at DepartmentController");
-//        return departmentService.getDepartmentByID(id);
-//    }
-//
-//    @DeleteMapping(value = "/departments/{id}")
-//    public ResponseEntity<String> deleteDepartmentByID(@PathVariable("id") Long id) throws DeleteDepartmentException
-//    {
-//        LOGGER.info("In deleteDepartmentByID at DepartmentController");
-//        return departmentService.deleteDepartmentByID(id);
-//    }
-//
-//    @PutMapping("/departments/{id}") //
-//    public Department updateDepartmentByID(@RequestBody @Valid Department dept, @PathVariable("id") Long id) throws UpdateDepartmentException, MethodArgumentNotValidException {
-//        LOGGER.info("In updateDepartmentByID at DepartmentController");
-//        return departmentService.updateDepartmentByID(dept, id);
-//    }
-//
-//    @GetMapping("/departments/name/{name}")
-//    public List<Department> getDepartmentByName(@PathVariable String name) throws NoDepartmentWithProvidedNameException
-//    {
-//        LOGGER.info("In getDepartmentByID at DepartmentController");
-//        return departmentService.getDepartmentByName(name);
-//    }
-//
-//    @GetMapping("/departments/name/like/{name}")
-//    public List<Department> getDepartmentNameLike(@PathVariable String name)throws NoDepartmentWithProvidedNameException
-//    {
-//        LOGGER.info("In getDepartmentNameLike at DepartmentController");
-//        return departmentService.customQueryForNameLike(name);
-//    }
+
+    @DeleteMapping(value = "/college/{id}")
+    public ResponseEntity<String> deleteDepartmentByID(@PathVariable("id") Long id) throws CollegeNotFoundException
+    {
+        LOGGER.info("In deleteDepartmentByID at DepartmentController");
+        return collegeService.deleteCollegeById(id);
+    }
 }
