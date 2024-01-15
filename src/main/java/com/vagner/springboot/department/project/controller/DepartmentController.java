@@ -2,7 +2,6 @@ package com.vagner.springboot.department.project.controller;
 
 import java.util.List;
 import javax.validation.Valid;
-
 import com.vagner.springboot.department.project.entity.College;
 import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;

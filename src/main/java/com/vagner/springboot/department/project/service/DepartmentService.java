@@ -58,8 +58,8 @@ public class DepartmentService
 
 	public ResponseEntity<String> deleteDepartmentByID(Long id) throws DeleteDepartmentException
 	{
-		Optional<Department> opt = departmentRepository.findById(id);
-		if(opt.isPresent())
+		boolean opt = departmentRepository.existsById(id);
+		if(opt)
 		{
 			departmentRepository.deleteById(id);
 			HttpHeaders headers = new HttpHeaders();
@@ -70,7 +70,6 @@ public class DepartmentService
 	}
 
 	public College updateDepartmentByID(Department updatedDepartment, long collegeId, long departmentId) throws UpdateDepartmentException, CollegeNotFoundException {
-		// TODO: GET THE COLLEGE TO NARROW DOWN DEPT LIST.
 		Optional<College> optCollege = collegeRepository.findById(collegeId);
 		if(!optCollege.isPresent())
 		{

@@ -1,16 +1,18 @@
 package com.vagner.springboot.department.project.service;
 
 import com.vagner.springboot.department.project.entity.College;
+import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;
 import com.vagner.springboot.department.project.error.college.DuplicateDepartmentException;
 import com.vagner.springboot.department.project.error.college.DuplicateMajorException;
 import com.vagner.springboot.department.project.repository.CollegeRepositoryInterface;
 import com.vagner.springboot.department.project.utils.CollegeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CollegeService
@@ -32,5 +34,16 @@ public class CollegeService
         List<College> list = collegeRepository.findAll();
         System.out.println(list);
         return list;
+    }
+
+    public ResponseEntity<String> deleteCollegeById(Long collegeId) throws CollegeNotFoundException {
+        boolean opt = collegeRepository.existsById(collegeId);
+        if (opt) {
+            collegeRepository.deleteById(collegeId);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            return ResponseEntity.status(200).headers(headers).body("{ \"Deletion\" : \"Successful for College with id " + collegeId + "\"}");
+        }
+        throw new CollegeNotFoundException("College Not Found, cannot delete.");
     }
 }
