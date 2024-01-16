@@ -41,4 +41,11 @@ public class CollegeController
         LOGGER.info("In deleteDepartmentByID at DepartmentController");
         return collegeService.deleteCollegeById(id);
     }
+
+    @PutMapping(value = "/college/{collegeId}")
+    public College updateCollege(@RequestBody College updatedCollege, @PathVariable long collegeId) throws CollegeNotFoundException {
+        LOGGER.info("In updateCollege at CollegeController");
+        return collegeService.updateCollege(updatedCollege, collegeId);
+
+    }
 }
