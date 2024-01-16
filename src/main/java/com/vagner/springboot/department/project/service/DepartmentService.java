@@ -88,27 +88,27 @@ public class DepartmentService
 
 		if(departmentFromDatabase == null)
 		{
-				throw new UpdateDepartmentException("Cannot PUT department, departmentId does not exist");
+			throw new UpdateDepartmentException("Cannot PUT department, departmentId does not exist");
 		}
 
 		// update block
 		//Department departmentFromDatabase = departmentFromDatabase = optDept.get();
-			if(Objects.nonNull(updatedDepartment.getDepartmentName()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentName()))
-			{
-				departmentFromDatabase.setDepartmentName(updatedDepartment.getDepartmentName());
-			}
+		if(Objects.nonNull(updatedDepartment.getDepartmentName()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentName()))
+		{
+			departmentFromDatabase.setDepartmentName(updatedDepartment.getDepartmentName());
+		}
 		if(Objects.nonNull(updatedDepartment.getDepartmentCode()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentCode()))
-			{
-				departmentFromDatabase.setDepartmentCode(updatedDepartment.getDepartmentCode());
-			}
+		{
+			departmentFromDatabase.setDepartmentCode(updatedDepartment.getDepartmentCode());
+		}
 		if(Objects.nonNull(updatedDepartment.getDepartmentPhone()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentPhone()))
-			{
-				departmentFromDatabase.setDepartmentPhone(updatedDepartment.getDepartmentPhone());
-			}
+		{
+			departmentFromDatabase.setDepartmentPhone(updatedDepartment.getDepartmentPhone());
+		}
 		if(Objects.nonNull(updatedDepartment.getDepartmentEmail()) && !"".equalsIgnoreCase(updatedDepartment.getDepartmentEmail()))
-			{
-				departmentFromDatabase.setDepartmentEmail(updatedDepartment.getDepartmentEmail());
-			}
+		{
+			departmentFromDatabase.setDepartmentEmail(updatedDepartment.getDepartmentEmail());
+		}
 		if(Objects.nonNull(updatedDepartment.getDepartmentDetails()))
 		{
 			DepartmentDetails departmentDetailsFromDatabase = departmentFromDatabase.getDepartmentDetails();
@@ -128,7 +128,7 @@ public class DepartmentService
 			}
 			departmentFromDatabase.setDepartmentDetails(departmentDetailsFromDatabase);
 		}
-			return collegeRepository.save(collegeFromDatabase);
+		return collegeRepository.save(collegeFromDatabase);
 	}
 
 	public List<Department> getDepartmentByName(String departmentName) throws NoDepartmentWithProvidedNameException
