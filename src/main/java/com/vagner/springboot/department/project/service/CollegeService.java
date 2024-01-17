@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -53,10 +54,22 @@ public class CollegeService
             throw new CollegeNotFoundException("Cannot PUT as collegeId does not exist.");
 
         College collegeFromDatabase = collegeRepository.getById(collegeId);
-        collegeFromDatabase.setCollegeName("put method");
-        //some validations
-        //if fail then throw exception..
-        //call the update department? or put the whole departments via this again?
+
+        if(Objects.nonNull(updatedCollege.getCollegeName()) && !updatedCollege.getCollegeName().isEmpty())
+            collegeFromDatabase.setCollegeName(updatedCollege.getCollegeName());
+        if(Objects.nonNull(updatedCollege.getPhone()) && !updatedCollege.getPhone().isEmpty())
+            collegeFromDatabase.setPhone(updatedCollege.getPhone());
+        if(Objects.nonNull(updatedCollege.getPresident()) && !updatedCollege.getPresident().isEmpty())
+            collegeFromDatabase.setPresident(updatedCollege.getPresident());
+        if(Objects.nonNull(updatedCollege.getMajors()) && !updatedCollege.getMajors().isEmpty())
+        {
+            //validate the list of majors does not have duplicate values.
+            collegeFromDatabase.setPresident(updatedCollege.getPresident());
+        }
+        //TODO: list of departments. Call the update service from departments?
+
+        //TODO: collegeAddress validation and posting
+
         return collegeRepository.save(collegeFromDatabase);
     }
 }
