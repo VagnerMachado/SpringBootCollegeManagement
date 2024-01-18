@@ -43,7 +43,7 @@ public class CollegeController
     }
 
     @PutMapping(value = "/college/{collegeId}")
-    public College updateCollege(@RequestBody College updatedCollege, @PathVariable long collegeId) throws CollegeNotFoundException {
+    public College updateCollege(@RequestBody College updatedCollege, @PathVariable long collegeId) throws CollegeNotFoundException, DuplicateMajorException {
         LOGGER.info("In updateCollege at CollegeController");
         return collegeService.updateCollege(updatedCollege, collegeId);
 
