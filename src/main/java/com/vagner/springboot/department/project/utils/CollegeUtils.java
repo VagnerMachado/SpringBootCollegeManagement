@@ -5,6 +5,7 @@ import com.vagner.springboot.department.project.error.college.DuplicateDepartmen
 import com.vagner.springboot.department.project.error.college.DuplicateMajorException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CollegeUtils

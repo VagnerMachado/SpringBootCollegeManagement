@@ -49,7 +49,7 @@ public class CollegeService
         throw new CollegeNotFoundException("College Not Found, cannot delete.");
     }
 
-    public College updateCollege(College updatedCollege, long collegeId) throws CollegeNotFoundException {
+    public College updateCollege(College updatedCollege, long collegeId) throws CollegeNotFoundException, DuplicateMajorException {
         if(!collegeRepository.existsById(collegeId))
             throw new CollegeNotFoundException("Cannot PUT as collegeId does not exist.");
 
@@ -62,11 +62,12 @@ public class CollegeService
         if(Objects.nonNull(updatedCollege.getPresident()) && !updatedCollege.getPresident().isEmpty())
             collegeFromDatabase.setPresident(updatedCollege.getPresident());
         if(Objects.nonNull(updatedCollege.getMajors()) && !updatedCollege.getMajors().isEmpty())
-        {
-            //validate the list of majors does not have duplicate values.
-            collegeFromDatabase.setPresident(updatedCollege.getPresident());
+        {   //aux me
+            CollegeUtils.validateMajorList(updatedCollege);
+            collegeFromDatabase.setMajors(updatedCollege.getMajors());
         }
-        //TODO: list of departments. Call the update service from departments?
+
+        // NOTE: list of departments. Should be done via the department PUT
 
         //TODO: collegeAddress validation and posting
 
