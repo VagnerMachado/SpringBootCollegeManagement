@@ -1,6 +1,7 @@
 package com.vagner.springboot.department.project.service;
 
 import com.vagner.springboot.department.project.entity.College;
+import com.vagner.springboot.department.project.entity.CollegeAddress;
 import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;
 import com.vagner.springboot.department.project.error.college.DuplicateDepartmentException;
 import com.vagner.springboot.department.project.error.college.DuplicateMajorException;
@@ -61,6 +62,8 @@ public class CollegeService
             collegeFromDatabase.setPhone(updatedCollege.getPhone());
         if(Objects.nonNull(updatedCollege.getPresident()) && !updatedCollege.getPresident().isEmpty())
             collegeFromDatabase.setPresident(updatedCollege.getPresident());
+        if(Objects.nonNull(updatedCollege.getEmail()) && !updatedCollege.getEmail().isEmpty())
+            collegeFromDatabase.setEmail(updatedCollege.getEmail());
         if(Objects.nonNull(updatedCollege.getMajors()) && !updatedCollege.getMajors().isEmpty())
         {   //aux me
             CollegeUtils.validateMajorList(updatedCollege);
@@ -69,6 +72,32 @@ public class CollegeService
 
         // NOTE: list of departments. Should be done via the department PUT
 
+        if(Objects.nonNull(updatedCollege.getCollegeAddress()))
+        {
+            CollegeAddress updatedAddress = updatedCollege.getCollegeAddress();
+            CollegeAddress addressFromDb = collegeFromDatabase.getCollegeAddress();
+
+            if(Objects.nonNull(updatedAddress.getAdditionalAddress()) && !updatedAddress.getAdditionalAddress().isEmpty())
+            {
+                addressFromDb.setAdditionalAddress(updatedAddress.getAdditionalAddress());
+            }
+            if(Objects.nonNull(updatedAddress.getCollegeAddress()) && !updatedAddress.getCollegeAddress().isEmpty())
+            {
+                addressFromDb.setCollegeAddress(updatedAddress.getCollegeAddress());
+            }
+            if(Objects.nonNull(updatedAddress.getCity()) && !updatedAddress.getCity().isEmpty())
+            {
+                addressFromDb.setCity(updatedAddress.getCity());
+            }
+            if(Objects.nonNull(updatedAddress.getState()) && !updatedAddress.getState().isEmpty())
+            {
+                addressFromDb.setState(updatedAddress.getState());
+            }
+            if(Objects.nonNull(updatedAddress.getZipCode()) && !updatedAddress.getZipCode().isEmpty())
+            {
+                addressFromDb.setZipCode(updatedAddress.getZipCode());
+            }
+        }
         //TODO: collegeAddress validation and posting
 
         return collegeRepository.save(collegeFromDatabase);

@@ -1,5 +1,6 @@
 Working now:
 
 Git Hub Issues to add:
-- When a college is updated how to deal with validate department?
-    - update only the root elements of a college. Treat department and address separately?
+
+- get for college name like
+- get colleges with XXX major
