@@ -9,6 +9,7 @@
 # Project Notes
 
 ---
+Please read the comments in the controller endpoints for usage. 
 
 This project explores creating a Spring Boot API to manage colleges and its departments, and in the process, enrich the application by
 exploring spring's various annotations, hibernate, jpa, exception handling, different types of data persistence with h2

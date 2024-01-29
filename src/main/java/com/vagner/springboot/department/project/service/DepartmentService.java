@@ -4,6 +4,7 @@ import com.vagner.springboot.department.project.entity.College;
 import com.vagner.springboot.department.project.entity.Department;
 import com.vagner.springboot.department.project.entity.DepartmentDetails;
 import com.vagner.springboot.department.project.error.college.CollegeNotFoundException;
+import com.vagner.springboot.department.project.error.college.DuplicateDepartmentException;
 import com.vagner.springboot.department.project.error.department.DeleteDepartmentException;
 import com.vagner.springboot.department.project.error.department.DepartmentNotFoundException;
 import com.vagner.springboot.department.project.error.department.NoDepartmentWithProvidedNameException;
@@ -31,7 +32,7 @@ public class DepartmentService
 	@Autowired
 	private CollegeRepositoryInterface collegeRepository;
 
-	public College saveDepartment(Department department, String collegeId) throws Exception {
+	public College saveDepartment(Department department, String collegeId) throws CollegeNotFoundException, DuplicateDepartmentException {
 		log.info(String.valueOf(department));
 		Optional<College> college = collegeRepository.findById(Long.valueOf(collegeId));
 		if(!college.isPresent())
